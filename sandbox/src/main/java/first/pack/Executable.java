@@ -3,10 +3,10 @@ package first.pack;
 public class Executable {
 
     public static void main(String[] args) {
-        Point p1 = new Point(-5, 5);
-        Point p2 = new Point(5, 5);
+        Point p1 = new Point(-8.6, 3.5);
+        Point p2 = new Point(5.9, 5.7);
         distanceOutput(p1, p2);
-        Point p3 = new Point(0, 0);
+        Point p3 = new Point(0.4, 0.8);
         Point p4 = new Point(3.5, 3.5);
         distanceOutput(p3, p4);
         Point p5 = new Point(-8.2, -3.6);
