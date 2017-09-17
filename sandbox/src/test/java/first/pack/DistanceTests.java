@@ -30,14 +30,14 @@ public class DistanceTests {
     public void testDistance4(){
         Point p1 = new Point(-8.6, 3.5);
         Point p2 = new Point(5.9, 5.7);
-        Assert.assertEquals(p1.distance(p2), 14.67, 0.0049);
+        Assert.assertEquals(p1.distance(p2), 14.67, 0.00501);
     }
 
     @Test
     public void testDistance5(){
         Point p1 = new Point(0.4, 0.8);
         Point p2 = new Point(3.5, 3.5);
-        Assert.assertEquals(p1.distance(p2), 4.11, 0.0049);
+        Assert.assertEquals(p1.distance(p2), 4.11, 0.00501);
     }
 
 }
