@@ -33,9 +33,8 @@ public class ContactCreationTests {
 
     @Test
     public void testContactCreation() {
-
         initContactCreation();
-        fillContactForm();
+        fillContactForm(new ContactData("Сднемрождения", "Поздравит", "Инаверно", "Оставит", "Мне в подарок", "4687569820", "4753698561", "8965475258", "tpoi@lkweq.giu"));
         submitContactCreation();
         returnToHomePage();
     }
@@ -48,34 +47,34 @@ public class ContactCreationTests {
         wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
 
-    private void fillContactForm() {
+    private void fillContactForm(ContactData contactData) {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
-        wd.findElement(By.name("firstname")).sendKeys("Прилетит");
+        wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
         wd.findElement(By.name("lastname")).click();
         wd.findElement(By.name("lastname")).clear();
-        wd.findElement(By.name("lastname")).sendKeys("Вдруг");
+        wd.findElement(By.name("lastname")).sendKeys(contactData.getLastName());
         wd.findElement(By.name("nickname")).click();
         wd.findElement(By.name("nickname")).clear();
-        wd.findElement(By.name("nickname")).sendKeys("Волшебник");
+        wd.findElement(By.name("nickname")).sendKeys(contactData.getNickname());
         wd.findElement(By.name("title")).click();
         wd.findElement(By.name("title")).clear();
-        wd.findElement(By.name("title")).sendKeys("В голубом");
+        wd.findElement(By.name("title")).sendKeys(contactData.getTitle());
         wd.findElement(By.name("company")).click();
         wd.findElement(By.name("company")).clear();
-        wd.findElement(By.name("company")).sendKeys("Вертолете");
+        wd.findElement(By.name("company")).sendKeys(contactData.getCompany());
         wd.findElement(By.name("home")).click();
         wd.findElement(By.name("home")).clear();
-        wd.findElement(By.name("home")).sendKeys("8268969523");
+        wd.findElement(By.name("home")).sendKeys(contactData.getHomePhone());
         wd.findElement(By.name("mobile")).click();
         wd.findElement(By.name("mobile")).clear();
-        wd.findElement(By.name("mobile")).sendKeys("8485697215");
+        wd.findElement(By.name("mobile")).sendKeys(contactData.getMobilePhone());
         wd.findElement(By.name("work")).click();
         wd.findElement(By.name("work")).clear();
-        wd.findElement(By.name("work")).sendKeys("2102635859");
+        wd.findElement(By.name("work")).sendKeys(contactData.getOfficePhone());
         wd.findElement(By.name("email")).click();
         wd.findElement(By.name("email")).clear();
-        wd.findElement(By.name("email")).sendKeys("etk@otkf.ou");
+        wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
     }
 
     private void initContactCreation() {
