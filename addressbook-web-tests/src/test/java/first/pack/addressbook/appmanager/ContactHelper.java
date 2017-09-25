@@ -35,7 +35,6 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactModification() {
-        //click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
         click(By.cssSelector("[name='entry'] td:nth-of-type(8) a"));
     }
 }
