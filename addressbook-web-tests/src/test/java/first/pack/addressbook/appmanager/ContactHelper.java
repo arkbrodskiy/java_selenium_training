@@ -37,4 +37,12 @@ public class ContactHelper extends HelperBase {
     public void initContactModification() {
         click(By.cssSelector("[name='entry'] td:nth-of-type(8) a"));
     }
+
+    public void deleteSelectedContacts() {
+        click(By.cssSelector("[value='Delete']"));
+    }
+
+    public void dismissAlertConfirm() {
+        wd.switchTo().alert().accept();
+    }
 }

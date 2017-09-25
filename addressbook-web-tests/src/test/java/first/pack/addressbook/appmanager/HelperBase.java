@@ -33,4 +33,8 @@ public class HelperBase {
     public void submitModification() {
         click(By.name("update"));
     }
+
+    public void selectItem() {
+        click(By.name("selected[]"));
+    }
 }
