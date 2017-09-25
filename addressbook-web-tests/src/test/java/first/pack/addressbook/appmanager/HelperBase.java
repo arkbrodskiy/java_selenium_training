@@ -29,4 +29,8 @@ public class HelperBase {
             return false;
         }
     }
+
+    public void submitModification() {
+        click(By.name("update"));
+    }
 }
