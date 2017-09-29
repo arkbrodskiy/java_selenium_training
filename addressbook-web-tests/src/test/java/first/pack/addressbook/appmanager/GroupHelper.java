@@ -1,6 +1,7 @@
 package first.pack.addressbook.appmanager;
 
 import first.pack.addressbook.model.GroupData;
+import first.pack.addressbook.tests.GroupCreationTests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -36,4 +37,12 @@ public class GroupHelper extends HelperBase {
     public void deleteSelectedGroups() {
         click(By.name("delete"));
     }
+
+    public void createGroup(GroupData group) {
+        initGroupCreation();
+        fillGroupForm(group);
+        submitGroupCreation();
+        returnToGroupPage();
+    }
+
 }
