@@ -57,4 +57,8 @@ public class HelperBase {
     public boolean isItemPresent() {
         return isElementPresent(By.name("selected[]"));
     }
+
+    public int getItemCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
 }
