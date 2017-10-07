@@ -35,8 +35,8 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void initContactModification() {
-        click(By.cssSelector("[name='entry'] td:nth-of-type(8) a"));
+    public void initContactModification(int index) {
+        wd.findElements(By.cssSelector("[name='entry'] td:nth-of-type(8) a")).get(index).click();
     }
 
     public void deleteSelectedContacts() {

@@ -8,7 +8,7 @@ public class ContactCreationTests extends TestBase{
     @Test
     public void testContactCreation() {
         int amountBefore = app.getGroupHelper().getItemCount();
-        app.getContactHelper().createContact(new ContactData("Одеяла", "Иподушки", "Ждут", "Ребят", "Даже сказка", "5690236940", "2513690248", "1023854750", "vgh@kjhf.fkl"));
+        app.getContactHelper().createContact(new ContactData("Даже", "Сказка", "Спать", "Ложится", "Чтобы", "4369852147", "1652058741", "9696323258", "dnri@fhjdgt.so"));
         int amountAfter = app.getGroupHelper().getItemCount();
         Assert.assertEquals(amountAfter, amountBefore + 1);
     }
