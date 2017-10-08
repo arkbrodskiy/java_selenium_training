@@ -28,9 +28,7 @@ public class GroupModificationTests extends TestBase {
         Assert.assertEquals(listAfter.size(), listBefore.size());
         listBefore.remove(indexToModify);
         listBefore.add(group);
-        Comparator<? super GroupData> byValue = ((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()));
-        listBefore.sort(byValue);
-        listAfter.sort(byValue);
-        Assert.assertEquals(listAfter, listBefore);
+        assertEqualsGroupLists(listBefore, listAfter);
     }
+
 }

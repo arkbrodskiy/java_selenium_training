@@ -18,10 +18,7 @@ public class ContactCreationTests extends TestBase{
         List<ContactData> listAfter = app.getContactHelper().getContactList();
         Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
         listBefore.add(contact);
-        Comparator<? super ContactData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
-        listBefore.sort(byId);
-        listAfter.sort(byId);
-        Assert.assertEquals(listAfter, listBefore);
+        assertEqualsContactLists(listBefore, listAfter);
     }
 
 }

@@ -19,10 +19,7 @@ public class GroupCreationTests extends TestBase{
         List<GroupData> listAfter = app.getGroupHelper().getGroupList();
         Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
         listBefore.add(group);
-        Comparator<? super GroupData> byValue = ((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()));
-        listBefore.sort(byValue);
-        listAfter.sort(byValue);
-        Assert.assertEquals(listAfter, listBefore);
+        assertEqualsGroupLists(listBefore, listAfter);
     }
 
 }
