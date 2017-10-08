@@ -18,10 +18,11 @@ public class GroupCreationTests extends TestBase{
         app.getGroupHelper().createGroup(group);
         List<GroupData> listAfter = app.getGroupHelper().getGroupList();
         Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
-        int maxValue = listAfter.stream().max((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue())).get().getValue();
-        group.setValue(maxValue);
         listBefore.add(group);
-        Assert.assertEquals(new HashSet<Object>(listAfter), new HashSet<Object>(listBefore));
+        Comparator<? super GroupData> byValue = ((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()));
+        listBefore.sort(byValue);
+        listAfter.sort(byValue);
+        Assert.assertEquals(listAfter, listBefore);
     }
 
 }

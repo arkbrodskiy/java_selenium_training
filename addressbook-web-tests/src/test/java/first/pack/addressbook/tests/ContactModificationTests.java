@@ -4,6 +4,7 @@ import first.pack.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class ContactModificationTests extends TestBase {
         Assert.assertEquals(listAfter.size(), listBefore.size());
         listBefore.remove(indexToModify);
         listBefore.add(contact);
-        Assert.assertEquals(new HashSet<Object>(listAfter), new HashSet<Object>(listBefore));
+        Comparator<? super ContactData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
+        listBefore.sort(byId);
+        listAfter.sort(byId);
+        Assert.assertEquals(listAfter, listBefore);
     }
 }

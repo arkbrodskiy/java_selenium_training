@@ -5,6 +5,7 @@ import first.pack.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -16,10 +17,11 @@ public class ContactCreationTests extends TestBase{
         app.getContactHelper().createContact(contact);
         List<ContactData> listAfter = app.getContactHelper().getContactList();
         Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
-        int maxId = listAfter.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
-        contact.setId(maxId);
         listBefore.add(contact);
-        Assert.assertEquals(new HashSet<Object>(listAfter), new HashSet<Object>(listBefore));
+        Comparator<? super ContactData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
+        listBefore.sort(byId);
+        listAfter.sort(byId);
+        Assert.assertEquals(listAfter, listBefore);
     }
 
 }
