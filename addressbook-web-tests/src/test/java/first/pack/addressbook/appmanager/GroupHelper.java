@@ -4,7 +4,11 @@ import first.pack.addressbook.model.GroupData;
 import first.pack.addressbook.tests.GroupCreationTests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
@@ -43,6 +47,17 @@ public class GroupHelper extends HelperBase {
         fillGroupForm(group);
         submitGroupCreation();
         returnToGroupPage();
+    }
+
+    public List<GroupData> getGroupList() {
+        List<GroupData> groupList = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+        for (WebElement element: elements){
+            String name = element.getText();
+            GroupData group = new GroupData(name, null, null);
+            groupList.add(group);
+        }
+        return groupList;
     }
 
 }

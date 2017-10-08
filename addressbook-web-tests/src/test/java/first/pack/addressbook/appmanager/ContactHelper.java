@@ -1,9 +1,14 @@
 package first.pack.addressbook.appmanager;
 
 import first.pack.addressbook.model.ContactData;
+import first.pack.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -52,5 +57,17 @@ public class ContactHelper extends HelperBase {
         fillContactForm(contact);
         submitContactCreation();
         returnToHomePage();
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contactList = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element: elements){
+            String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
+            String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
+            ContactData contact = new ContactData(firstName, lastName, null, null, null, null, null, null, null);
+            contactList.add(contact);
+        }
+        return contactList;
     }
 }

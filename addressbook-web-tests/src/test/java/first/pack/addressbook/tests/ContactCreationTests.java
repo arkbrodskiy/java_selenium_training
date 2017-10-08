@@ -1,16 +1,19 @@
 package first.pack.addressbook.tests;
 
 import first.pack.addressbook.model.ContactData;
+import first.pack.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class ContactCreationTests extends TestBase{
     @Test
     public void testContactCreation() {
-        int amountBefore = app.getGroupHelper().getItemCount();
+        List<ContactData> listBefore = app.getContactHelper().getContactList();
         app.getContactHelper().createContact(new ContactData("Даже", "Сказка", "Спать", "Ложится", "Чтобы", "4369852147", "1652058741", "9696323258", "dnri@fhjdgt.so"));
-        int amountAfter = app.getGroupHelper().getItemCount();
-        Assert.assertEquals(amountAfter, amountBefore + 1);
+        List<ContactData> listAfter = app.getContactHelper().getContactList();
+        Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
     }
 
 }
