@@ -5,15 +5,24 @@ import first.pack.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase{
     @Test
     public void testContactCreation() {
         List<ContactData> listBefore = app.getContactHelper().getContactList();
-        app.getContactHelper().createContact(new ContactData("Даже", "Сказка", "Спать", "Ложится", "Чтобы", "4369852147", "1652058741", "9696323258", "dnri@fhjdgt.so"));
+        ContactData contact = new ContactData("Даже", "Сказка", "Спать", "Ложится", "Чтобы", "4369852147", "1652058741", "9696323258", "dnri@fhjdgt.so");
+        app.getContactHelper().createContact(contact);
         List<ContactData> listAfter = app.getContactHelper().getContactList();
         Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
+        int maxId = 0;
+        for (ContactData c: listAfter){
+            if (c.getId() > maxId) maxId = c.getId();
+        }
+        contact.setId(maxId);
+        listBefore.add(contact);
+        Assert.assertEquals(new HashSet<Object>(listAfter), new HashSet<Object>(listBefore));
     }
 
 }

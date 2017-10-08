@@ -1,7 +1,7 @@
 package first.pack.addressbook.model;
 
 public class ContactData {
-    private final String id;
+    private int id;
     private final String firstName;
     private final String lastName;
     private final String nickname;
@@ -12,7 +12,7 @@ public class ContactData {
     private final String officePhone;
     private final String email;
 
-    public ContactData(String id, String firstName, String lastName, String nickname, String title, String company, String homePhone, String mobilePhone, String officePhone, String email) {
+    public ContactData(int id, String firstName, String lastName, String nickname, String title, String company, String homePhone, String mobilePhone, String officePhone, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,7 +26,7 @@ public class ContactData {
     }
 
     public ContactData(String firstName, String lastName, String nickname, String title, String company, String homePhone, String mobilePhone, String officePhone, String email) {
-        this.id = null;
+        this.id = 0;
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
@@ -38,7 +38,7 @@ public class ContactData {
         this.email = email;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -79,6 +79,10 @@ public class ContactData {
     }
 
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,14 +90,14 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (id != that.id) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
