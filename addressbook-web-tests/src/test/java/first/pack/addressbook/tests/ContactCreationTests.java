@@ -16,10 +16,7 @@ public class ContactCreationTests extends TestBase{
         app.getContactHelper().createContact(contact);
         List<ContactData> listAfter = app.getContactHelper().getContactList();
         Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
-        int maxId = 0;
-        for (ContactData c: listAfter){
-            if (c.getId() > maxId) maxId = c.getId();
-        }
+        int maxId = listAfter.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId();
         contact.setId(maxId);
         listBefore.add(contact);
         Assert.assertEquals(new HashSet<Object>(listAfter), new HashSet<Object>(listBefore));
