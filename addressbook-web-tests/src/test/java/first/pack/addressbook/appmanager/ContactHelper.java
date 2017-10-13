@@ -6,8 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -70,5 +72,12 @@ public class ContactHelper extends HelperBase {
             contactList.add(contact);
         }
         return contactList;
+    }
+
+    public void assertEqualsContactLists(List<ContactData> listBefore, List<ContactData> listAfter) {
+        Comparator<? super ContactData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
+        listBefore.sort(byId);
+        listAfter.sort(byId);
+        Assert.assertEquals(listAfter, listBefore);
     }
 }

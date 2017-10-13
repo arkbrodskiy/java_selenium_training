@@ -4,8 +4,6 @@ import first.pack.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class ContactModificationTests extends TestBase {
@@ -26,7 +24,7 @@ public class ContactModificationTests extends TestBase {
         Assert.assertEquals(listAfter.size(), listBefore.size());
         listBefore.remove(indexToModify);
         listBefore.add(contact);
-        assertEqualsContactLists(listBefore, listAfter);
+        app.getContactHelper().assertEqualsContactLists(listBefore, listAfter);
     }
 
 }

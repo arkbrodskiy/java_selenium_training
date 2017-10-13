@@ -6,8 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupHelper extends HelperBase {
@@ -59,6 +61,13 @@ public class GroupHelper extends HelperBase {
             groupList.add(group);
         }
         return groupList;
+    }
+
+    public void assertEqualsGroupLists(List<GroupData> listBefore, List<GroupData> listAfter) {
+        Comparator<? super GroupData> byValue = ((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()));
+        listBefore.sort(byValue);
+        listAfter.sort(byValue);
+        Assert.assertEquals(listAfter, listBefore);
     }
 
 }
