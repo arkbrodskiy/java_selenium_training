@@ -14,12 +14,26 @@ import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
+    //ApplicationManager app;
+
+    /*public ContactHelper(ApplicationManager app) {
+        super(app);
+
+        *//*this.app = app;
+        this.wd = app.wd;
+        super(wd);*//*
+    }*/
+
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
 
     public void returnToHomePage() {
         click(By.linkText("home page"));
+    }
+
+    public void gotoHomePage() {
+        click(By.linkText("home"));
     }
 
     public void submitContactCreation() {
@@ -58,7 +72,21 @@ public class ContactHelper extends HelperBase {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
-        returnToHomePage();
+        gotoHomePage();
+    }
+
+    public void deleteContact(int index) {
+        selectItem(index);
+        deleteSelectedContacts();
+        dismissAlertConfirm();
+        gotoHomePage();
+    }
+
+    public void modifyContact(int index, ContactData contact) {
+        initContactModification(index);
+        fillContactForm(contact);
+        submitModification();
+        gotoHomePage();
     }
 
     public List<ContactData> getContactList() {
@@ -80,4 +108,5 @@ public class ContactHelper extends HelperBase {
         listAfter.sort(byId);
         Assert.assertEquals(listAfter, listBefore);
     }
+
 }
