@@ -53,28 +53,28 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
         returnToHomePage();
     }
 
-    public void deleteContact(int index) {
+    public void delete(int index) {
         selectItem(index);
         deleteSelectedContacts();
         dismissAlertConfirm();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
     }
 
-    public void modifyContact(int index, ContactData contact) {
+    public void modify(int index, ContactData contact) {
         initContactModification(index);
         fillContactForm(contact);
         submitModification();
         returnToHomePage();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> createList() {
         List<ContactData> contactList = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element: elements){
@@ -87,7 +87,7 @@ public class ContactHelper extends HelperBase {
         return contactList;
     }
 
-    public void assertEqualsContactLists(List<ContactData> listBefore, List<ContactData> listAfter) {
+    public void assertEqualLists(List<ContactData> listBefore, List<ContactData> listAfter) {
         Comparator<? super ContactData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
         listBefore.sort(byId);
         listAfter.sort(byId);

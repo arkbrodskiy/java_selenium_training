@@ -43,20 +43,20 @@ public class GroupHelper extends HelperBase {
         click(By.name("delete"));
     }
 
-    public void createGroup(GroupData group) {
+    public void create(GroupData group) {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
         returnToGroupPage();
     }
 
-    public void deleteGroup(int index) {
+    public void delete(int index) {
         selectItem(index);
         deleteSelectedGroups();
         returnToGroupPage();
     }
 
-    public void modifyGroup(int index, GroupData group) {
+    public void modify(int index, GroupData group) {
         selectItem(index);
         initGroupModification();
         fillGroupForm(group);
@@ -64,7 +64,7 @@ public class GroupHelper extends HelperBase {
         returnToGroupPage();
     }
 
-    public List<GroupData> getGroupList() {
+    public List<GroupData> createList() {
         List<GroupData> groupList = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element: elements){
@@ -76,7 +76,7 @@ public class GroupHelper extends HelperBase {
         return groupList;
     }
 
-    public void assertEqualsGroupLists(List<GroupData> listBefore, List<GroupData> listAfter) {
+    public void assertEqualLists(List<GroupData> listBefore, List<GroupData> listAfter) {
         Comparator<? super GroupData> byValue = ((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()));
         listBefore.sort(byValue);
         listAfter.sort(byValue);
