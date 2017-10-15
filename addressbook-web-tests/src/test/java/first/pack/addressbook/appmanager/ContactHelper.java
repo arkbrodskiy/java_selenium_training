@@ -16,6 +16,8 @@ public class ContactHelper extends HelperBase {
         this.wd = app.wd;
     }
 
+    private Contacts contactCache = null;
+
     public void returnToHomePage() {
         click(By.linkText("home page"));
     }
@@ -52,6 +54,7 @@ public class ContactHelper extends HelperBase {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -59,6 +62,7 @@ public class ContactHelper extends HelperBase {
         selectContactById(contact.getId());
         deleteSelectedContacts();
         dismissAlertConfirm();
+        contactCache = null;
         app.goTo().gotoHomePage();
     }
 
@@ -70,6 +74,7 @@ public class ContactHelper extends HelperBase {
         initContactModificationById(contact.getId());
         fillContactForm(contact);
         submitModification();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -84,15 +89,16 @@ public class ContactHelper extends HelperBase {
     }
 
     public Contacts takeAll() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) return new Contacts(contactCache);
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element: elements){
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
             String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
             String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
-            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 
     public void assertEqualLists(List<ContactData> listBefore, List<ContactData> listAfter) {
