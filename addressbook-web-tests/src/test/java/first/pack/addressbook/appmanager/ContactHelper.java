@@ -1,11 +1,8 @@
 package first.pack.addressbook.appmanager;
 
 import first.pack.addressbook.model.ContactData;
-import first.pack.addressbook.model.GroupData;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 
 import java.util.ArrayList;
@@ -14,26 +11,14 @@ import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
-    //ApplicationManager app;
-
-    /*public ContactHelper(ApplicationManager app) {
+    public ContactHelper(ApplicationManager app) {
         super(app);
-
-        *//*this.app = app;
+        this.app = app;
         this.wd = app.wd;
-        super(wd);*//*
-    }*/
-
-    public ContactHelper(WebDriver wd) {
-        super(wd);
     }
 
     public void returnToHomePage() {
         click(By.linkText("home page"));
-    }
-
-    public void gotoHomePage() {
-        click(By.linkText("home"));
     }
 
     public void submitContactCreation() {
@@ -72,21 +57,21 @@ public class ContactHelper extends HelperBase {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
-        gotoHomePage();
+        returnToHomePage();
     }
 
     public void deleteContact(int index) {
         selectItem(index);
         deleteSelectedContacts();
         dismissAlertConfirm();
-        gotoHomePage();
+        app.getNavigationHelper().gotoHomePage();
     }
 
     public void modifyContact(int index, ContactData contact) {
         initContactModification(index);
         fillContactForm(contact);
         submitModification();
-        gotoHomePage();
+        returnToHomePage();
     }
 
     public List<ContactData> getContactList() {

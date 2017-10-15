@@ -1,6 +1,5 @@
 package first.pack.addressbook.tests;
 
-import first.pack.addressbook.appmanager.NavigationHelper;
 import first.pack.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;

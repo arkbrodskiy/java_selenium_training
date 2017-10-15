@@ -6,8 +6,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class SessionHelper extends HelperBase {
 
-    public SessionHelper(WebDriver wd) {
-        super(wd);
+    public SessionHelper(ApplicationManager app) {
+        super(app);
+        this.app = app;
+        this.wd = app.wd;
     }
 
     public void login(String username, String password) {

@@ -1,11 +1,8 @@
 package first.pack.addressbook.appmanager;
 
 import first.pack.addressbook.model.GroupData;
-import first.pack.addressbook.tests.GroupCreationTests;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 
 import java.util.ArrayList;
@@ -14,8 +11,10 @@ import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
-    public GroupHelper(WebDriver wd) {
-        super(wd);
+    public GroupHelper(ApplicationManager app) {
+        super(app);
+        this.app = app;
+        this.wd = app.wd;
     }
 
     public void returnToGroupPage() {

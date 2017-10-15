@@ -1,24 +1,18 @@
 package first.pack.addressbook.appmanager;
 
-import first.pack.addressbook.model.GroupData;
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
     protected WebDriver wd;
-    //protected ApplicationManager app;
+    protected ApplicationManager app;
 
-    public HelperBase(WebDriver wd) {
-        this.wd = wd;
-    }
-
-    /*public HelperBase(ApplicationManager app) {
+    public HelperBase(ApplicationManager app) {
         this.app = app;
         this.wd = app.wd;
-    }*/
+    }
 
     protected void click(By locator) {
         wd.findElement(locator).click();
