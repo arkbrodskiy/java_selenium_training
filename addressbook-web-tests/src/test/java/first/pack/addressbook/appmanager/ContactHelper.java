@@ -1,6 +1,7 @@
 package first.pack.addressbook.appmanager;
 
 import first.pack.addressbook.model.ContactData;
+import first.pack.addressbook.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -82,16 +83,16 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-    public Set<ContactData> takeAll() {
-        Set<ContactData> contactSet = new HashSet<>();
+    public Contacts takeAll() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element: elements){
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
             String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
             String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
-            contactSet.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
-        return contactSet;
+        return contacts;
     }
 
     public void assertEqualLists(List<ContactData> listBefore, List<ContactData> listAfter) {

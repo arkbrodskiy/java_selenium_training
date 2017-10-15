@@ -1,6 +1,7 @@
 package first.pack.addressbook.appmanager;
 
 import first.pack.addressbook.model.GroupData;
+import first.pack.addressbook.model.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -66,15 +67,15 @@ public class GroupHelper extends HelperBase {
         returnToGroupPage();
     }
 
-    public Set<GroupData> takeAll() {
-        Set<GroupData> groupSet = new HashSet<>();
+    public Groups takeAll() {
+        Groups groups = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element: elements){
             int value = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String name = element.getText();
-            groupSet.add(new GroupData().withValue(value).withName(name));
+            groups.add(new GroupData().withValue(value).withName(name));
         }
-        return groupSet;
+        return groups;
     }
 
     public void assertEqualLists(List<GroupData> listBefore, List<GroupData> listAfter) {
