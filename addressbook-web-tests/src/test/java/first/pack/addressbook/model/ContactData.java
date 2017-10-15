@@ -1,42 +1,16 @@
 package first.pack.addressbook.model;
 
 public class ContactData {
-    private int id;
-    private final String firstName;
-    private final String lastName;
-    private final String nickname;
-    private final String title;
-    private final String company;
-    private final String homePhone;
-    private final String mobilePhone;
-    private final String officePhone;
-    private final String email;
-
-    public ContactData(int id, String firstName, String lastName, String nickname, String title, String company, String homePhone, String mobilePhone, String officePhone, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nickname = nickname;
-        this.title = title;
-        this.company = company;
-        this.homePhone = homePhone;
-        this.mobilePhone = mobilePhone;
-        this.officePhone = officePhone;
-        this.email = email;
-    }
-
-    public ContactData(String firstName, String lastName, String nickname, String title, String company, String homePhone, String mobilePhone, String officePhone, String email) {
-        this.id = Integer.MAX_VALUE;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nickname = nickname;
-        this.title = title;
-        this.company = company;
-        this.homePhone = homePhone;
-        this.mobilePhone = mobilePhone;
-        this.officePhone = officePhone;
-        this.email = email;
-    }
+    private int id = Integer.MAX_VALUE;
+    private String firstName;
+    private String lastName;
+    private String nickname;
+    private String title;
+    private String company;
+    private String homePhone;
+    private String mobilePhone;
+    private String officePhone;
+    private String email;
 
     public int getId() {
         return id;
@@ -79,8 +53,54 @@ public class ContactData {
     }
 
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public ContactData withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public ContactData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ContactData withNickname(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
+    public ContactData withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public ContactData withCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
+    public ContactData withMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+        return this;
+    }
+
+    public ContactData withOfficePhone(String officePhone) {
+        this.officePhone = officePhone;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
     }
 
     @Override
