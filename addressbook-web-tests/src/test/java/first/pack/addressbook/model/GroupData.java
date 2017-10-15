@@ -57,11 +57,16 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
+        if (value != groupData.value) return false;
         return name != null ? name.equals(groupData.name) : groupData.name == null;
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        int result = value;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
+
+
 }

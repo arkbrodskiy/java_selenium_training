@@ -5,9 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ContactHelper extends HelperBase {
 
@@ -41,10 +39,6 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void initContactModification(int index) {
-        wd.findElements(By.cssSelector("[name='entry'] td:nth-of-type(8) a")).get(index).click();
-    }
-
     public void deleteSelectedContacts() {
         click(By.cssSelector("[value='Delete']"));
     }
@@ -60,30 +54,44 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void delete(int index) {
-        selectItem(index);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         deleteSelectedContacts();
         dismissAlertConfirm();
         app.goTo().gotoHomePage();
     }
 
-    public void modify(int index, ContactData contact) {
-        initContactModification(index);
+    private void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
+    }
+
+    public void modify(ContactData contact) {
+        initContactModificationById(contact.getId());
         fillContactForm(contact);
         submitModification();
         returnToHomePage();
     }
 
-    public List<ContactData> createList() {
-        List<ContactData> contactList = new ArrayList<>();
+    private void initContactModificationById(int id) {
+        List<WebElement> contacts = wd.findElements(By.name("entry"));
+        for (WebElement contact: contacts){
+            if (Integer.parseInt(contact.findElement(By.tagName("input")).getAttribute("id")) == id){
+                contact.findElement(By.cssSelector("[title='Edit']")).click();
+                break;
+            }
+        }
+    }
+
+    public Set<ContactData> takeAll() {
+        Set<ContactData> contactSet = new HashSet<>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element: elements){
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
             String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
             String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
-            contactList.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            contactSet.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
-        return contactList;
+        return contactSet;
     }
 
     public void assertEqualLists(List<ContactData> listBefore, List<ContactData> listAfter) {
@@ -92,5 +100,4 @@ public class ContactHelper extends HelperBase {
         listAfter.sort(byId);
         Assert.assertEquals(listAfter, listBefore);
     }
-
 }

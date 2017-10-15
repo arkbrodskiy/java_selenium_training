@@ -5,9 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class GroupHelper extends HelperBase {
 
@@ -50,29 +48,33 @@ public class GroupHelper extends HelperBase {
         returnToGroupPage();
     }
 
-    public void delete(int index) {
-        selectItem(index);
+    public void delete(GroupData group) {
+        selectGroupByValue(group.getValue());
         deleteSelectedGroups();
         returnToGroupPage();
     }
 
-    public void modify(int index, GroupData group) {
-        selectItem(index);
+    private void selectGroupByValue(int value) {
+        wd.findElement(By.cssSelector("input[value='" + value + "']")).click();
+    }
+
+    public void modify(GroupData group) {
+        selectGroupByValue(group.getValue());
         initGroupModification();
         fillGroupForm(group);
         submitModification();
         returnToGroupPage();
     }
 
-    public List<GroupData> createList() {
-        List<GroupData> groupList = new ArrayList<>();
+    public Set<GroupData> takeAll() {
+        Set<GroupData> groupSet = new HashSet<>();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element: elements){
             int value = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String name = element.getText();
-            groupList.add(new GroupData().withValue(value).withName(name));
+            groupSet.add(new GroupData().withValue(value).withName(name));
         }
-        return groupList;
+        return groupSet;
     }
 
     public void assertEqualLists(List<GroupData> listBefore, List<GroupData> listAfter) {
@@ -81,5 +83,7 @@ public class GroupHelper extends HelperBase {
         listAfter.sort(byValue);
         Assert.assertEquals(listAfter, listBefore);
     }
+
+
 
 }

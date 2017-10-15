@@ -4,20 +4,21 @@ import first.pack.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.Set;
 
 public class GroupCreationTests extends TestBase{
 
     @Test
     public void testGroupCreation() {
         app.goTo().groupPage();
-        List<GroupData> listBefore = app.group().createList();
+        Set<GroupData> setBefore = app.group().takeAll();
         GroupData group = new GroupData().withName("Group 07").withHeader("Group 07 header").withFooter("Group 07 footer");
         app.group().create(group);
-        List<GroupData> listAfter = app.group().createList();
-        Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
-        listBefore.add(group);
-        app.group().assertEqualLists(listBefore, listAfter);
+        Set<GroupData> setAfter = app.group().takeAll();
+        Assert.assertEquals(setAfter.size(), setBefore.size() + 1);
+        group.withValue(setAfter.stream().mapToInt((g) -> g.getValue()).max().getAsInt());
+        setBefore.add(group);
+        Assert.assertEquals(setAfter, setBefore);
     }
 
 }

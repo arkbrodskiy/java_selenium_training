@@ -4,12 +4,12 @@ import first.pack.addressbook.model.ContactData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTests extends TestBase{
     @Test
     public void testContactCreation() {
-        List<ContactData> listBefore = app.contact().createList();
+        Set<ContactData> setBefore = app.contact().takeAll();
         ContactData contact = new ContactData()
                 .withFirstName("Даже")
                 .withLastName("Сказка")
@@ -21,10 +21,11 @@ public class ContactCreationTests extends TestBase{
                 .withOfficePhone("9696323258")
                 .withEmail("dnri@fhjdgt.so");
         app.contact().create(contact);
-        List<ContactData> listAfter = app.contact().createList();
-        Assert.assertEquals(listAfter.size(), listBefore.size() + 1);
-        listBefore.add(contact);
-        app.contact().assertEqualLists(listBefore, listAfter);
+        Set<ContactData> setAfter = app.contact().takeAll();
+        Assert.assertEquals(setAfter.size(), setBefore.size() + 1);
+        contact.withId(setAfter.stream().mapToInt((c) -> c.getId()).max().getAsInt());
+        setBefore.add(contact);
+        Assert.assertEquals(setAfter, setBefore);
     }
 
 }

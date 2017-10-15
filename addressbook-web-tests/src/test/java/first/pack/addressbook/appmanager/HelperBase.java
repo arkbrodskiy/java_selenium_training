@@ -1,8 +1,6 @@
 package first.pack.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
@@ -29,39 +27,8 @@ public class HelperBase {
         }
     }
 
-    public Boolean isElementPresent(By locator) {
-        try {
-            wd.findElement(locator);
-            return true;
-        } catch (NoSuchElementException e){
-            return false;
-        }
-    }
-
-    public boolean isAlertPresent() {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
     public void submitModification() {
         click(By.name("update"));
     }
-
-    public void selectItem(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
-
-    public boolean isItemPresent() {
-        return isElementPresent(By.name("selected[]"));
-    }
-
-    public int getItemCount() {
-        return wd.findElements(By.name("selected[]")).size();
-    }
-
 
 }

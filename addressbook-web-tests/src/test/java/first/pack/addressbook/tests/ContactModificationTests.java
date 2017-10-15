@@ -5,13 +5,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        if (app.contact().createList().size() == 0){
+        if (app.contact().takeAll().size() == 0){
             app.contact().create(new ContactData()
                     .withFirstName("Одеяла")
                     .withLastName("Иподушки")
@@ -27,10 +27,10 @@ public class ContactModificationTests extends TestBase {
 
     @Test
     public void testContactModification() {
-        List<ContactData> listBefore = app.contact().createList();
-        int indexToModify = listBefore.size() - 1;
+        Set<ContactData> setBefore = app.contact().takeAll();
+        ContactData contactToModify = setBefore.iterator().next();
         ContactData contact = new ContactData()
-                .withId(listBefore.get(indexToModify).getId())
+                .withId(contactToModify.getId())
                 .withFirstName("НьюОдеяла")
                 .withLastName("НьюИподушки")
                 .withNickname("НьюЖдут")
@@ -40,12 +40,12 @@ public class ContactModificationTests extends TestBase {
                 .withMobilePhone("0876902145")
                 .withOfficePhone("0369148570")
                 .withEmail("newhgv@svmi.iiu");
-        app.contact().modify(indexToModify, contact);
-        List<ContactData> listAfter = app.contact().createList();
-        Assert.assertEquals(listAfter.size(), listBefore.size());
-        listBefore.remove(indexToModify);
-        listBefore.add(contact);
-        app.contact().assertEqualLists(listBefore, listAfter);
+        app.contact().modify(contact);
+        Set<ContactData> setAfter = app.contact().takeAll();
+        Assert.assertEquals(setAfter.size(), setBefore.size());
+        setBefore.remove(contactToModify);
+        setBefore.add(contact);
+        Assert.assertEquals(setAfter, setBefore);
     }
 
 
