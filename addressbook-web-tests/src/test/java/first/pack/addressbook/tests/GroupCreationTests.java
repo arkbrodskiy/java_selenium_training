@@ -4,11 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import first.pack.addressbook.model.GroupData;
 import first.pack.addressbook.model.Groups;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;

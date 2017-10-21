@@ -52,17 +52,17 @@ public class ContactDataGenerator {
                     .withNickname(String.format("Nickname_gen %s", i))
                     .withTitle(String.format("Title_gen %s", i))
                     .withCompany(String.format("Company_gen %s", i))
-                    .withHomePhone(getRandomPhone())
-                    .withMobilePhone(getRandomPhone())
-                    .withOfficePhone(getRandomPhone())
-                    .withEmail(getRandomEmail())
-                    .withEmail2(getRandomEmail())
-                    .withEmail3(getRandomEmail()));
+                    .withHomePhone(generateRandomPhone())
+                    .withMobilePhone(generateRandomPhone())
+                    .withOfficePhone(generateRandomPhone())
+                    .withEmail(generateRandomEmail())
+                    .withEmail2(generateRandomEmail())
+                    .withEmail3(generateRandomEmail()));
         }
         return contacts;
     }
 
-    private String getRandomEmail() {
+    public String generateRandomEmail() {
         return getRandomAlphaNumString(3, 10) + "@" + getRandomAlphaNumString(3, 7) + "." + getRandomAlphaNumString(2, 3);
     }
 
@@ -78,7 +78,7 @@ public class ContactDataGenerator {
         return String.valueOf(result);
     }
 
-    private String getRandomPhone() {
+    public String generateRandomPhone() {
         Random random = new Random();
         StringBuilder result = new StringBuilder();
         for (int i=0; i < 10; i++){
