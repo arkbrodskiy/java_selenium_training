@@ -1,5 +1,6 @@
 package first.pack.addressbook.tests;
 
+import first.pack.addressbook.generators.ContactDataGenerator;
 import first.pack.addressbook.model.ContactData;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,6 +12,7 @@ public class ContactInfoTests extends TestBase{
 
     @BeforeMethod
     public void ensurePreconditions() {
+        ContactDataGenerator generator = new ContactDataGenerator();
         if (app.contact().takeAll().size() == 0){
             app.contact().create(new ContactData()
                     .withFirstName("Одеяла")
@@ -18,13 +20,13 @@ public class ContactInfoTests extends TestBase{
                     .withNickname("Ждут")
                     .withTitle("Ребят")
                     .withCompany("Даже сказка")
-                    .withHomePhone("5690236940")
-                    .withMobilePhone("2513690248")
-                    .withOfficePhone("1023854750")
+                    .withHomePhone(generator.generateRandomPhone())
+                    .withMobilePhone(generator.generateRandomPhone())
+                    .withOfficePhone(generator.generateRandomPhone())
                     .withAddress("698546 Омск ул. Мира 3-59")
-                    .withEmail("vgh@kjhf.fkl")
-                    .withEmail2("ghjlg@iuhc.gvf")
-                    .withEmail3("ijvnb@bvhkw.hb"));
+                    .withEmail(generator.generateRandomEmail())
+                    .withEmail2(generator.generateRandomEmail())
+                    .withEmail3(generator.generateRandomEmail()));
         }
     }
 
