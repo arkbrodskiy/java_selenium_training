@@ -2,8 +2,10 @@ package first.pack.addressbook.appmanager;
 
 import first.pack.addressbook.model.ContactData;
 import first.pack.addressbook.model.Contacts;
+import first.pack.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.*;
@@ -138,5 +140,29 @@ public class ContactHelper extends HelperBase {
 
     public String mergeEmails(ContactData contact) {
         return Stream.of(contact.getEmail(), contact.getEmail2(), contact.getEmail3()).filter((s) -> ! s.equals("")).collect(Collectors.joining("\n"));
+    }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+        selectContactById(contact.getId());
+        selectGroupToAdd(group);
+        click(By.name("add"));
+        app.goTo().homePage();
+    }
+
+    private void selectGroupToAdd(GroupData group) {
+        Select dropdown = new Select(wd.findElement(By.name("to_group")));
+        dropdown.selectByValue(String.valueOf(group.getValue()));
+    }
+
+    public ContactData getById(int id) {
+        Contacts contactList = app.db().readContacts();
+        ContactData result = new ContactData();
+        for (ContactData contact: contactList){
+            if (contact.getId() == id) {
+                result = contact;
+                break;
+            }
+        }
+        return result;
     }
 }

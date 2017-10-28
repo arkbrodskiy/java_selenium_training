@@ -3,6 +3,9 @@ package first.pack.addressbook.tests;
 import first.pack.addressbook.generators.ContactDataGenerator;
 import first.pack.addressbook.model.ContactData;
 import first.pack.addressbook.model.Contacts;
+import first.pack.addressbook.model.GroupData;
+import first.pack.addressbook.model.Groups;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -12,7 +15,7 @@ import static org.hamcrest.MatcherAssert.*;
 public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions() {
+    public void ensureContactExists() {
         ContactDataGenerator generator = new ContactDataGenerator();
         if (app.db().readContacts().size() == 0){
             app.contact().create(new ContactData()
@@ -63,6 +66,41 @@ public class ContactModificationTests extends TestBase {
         verifyContactListInUI();
     }
 
+    @Test
+    public void testAddToGroup(){
+        Contacts contactList = app.db().readContacts();
+        ContactData contactToAdd = contactList.iterator().next();
+        GroupData groupToAdd = findGroupToAdd(contactToAdd);
+        app.contact().addToGroup(contactToAdd, groupToAdd);
+        Assert.assertTrue(app.contact().getById(contactToAdd.getId()).getGroups().contains(groupToAdd));
+    }
 
+    private GroupData findGroupToAdd(ContactData contact) {
+        GroupData group = new GroupData();
+        Groups groupsWithContact = contact.getGroups();
+        ensureFreeGroupExists(groupsWithContact);
+        return findFreeGroup(group, groupsWithContact);
+    }
+
+    private GroupData findFreeGroup(GroupData group, Groups groupsWithContact) {
+        Groups groupList = app.db().readGroups();
+        for(GroupData groupInList: groupList){
+            if (!groupsWithContact.contains(groupInList)){
+                group = groupInList;
+                break;
+            }
+        }
+        return group;
+    }
+
+    private void ensureFreeGroupExists(Groups groups) {
+        if (groups.size() == app.db().readGroups().size()){
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("Group 01").withHeader("Group 01 header").withFooter("Group 01 footer"));
+            app.goTo().homePage();
+        }
+    }
+
+    
 
 }
