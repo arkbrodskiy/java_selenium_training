@@ -1,14 +1,29 @@
 package first.pack.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "group_list")
 public class GroupData {
+    @Id
+    @Column(name = "group_id")
     private int value = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "group_name")
     private String name;
     @Expose
+    @Column(name = "group_header")
+    @Type(type = "text")
     private String header;
     @Expose
+    @Column(name = "group_footer")
+    @Type(type = "text")
     private String footer;
 
     public int getValue() {
