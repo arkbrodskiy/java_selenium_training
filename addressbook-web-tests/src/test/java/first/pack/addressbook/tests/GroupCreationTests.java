@@ -43,6 +43,7 @@ public class GroupCreationTests extends TestBase{
         Groups after = app.db().readGroups();
         assertThat(after, equalTo(
                 before.withAdded(group.withValue(after.stream().mapToInt((g) -> g.getValue()).max().getAsInt()))));
+        verifyGroupListInUI();
     }
 
     @Test
