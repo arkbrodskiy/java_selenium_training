@@ -14,27 +14,33 @@ public class ContactDeletionTests extends TestBase{
     @BeforeMethod
     public void ensurePreconditions() {
         ContactDataGenerator generator = new ContactDataGenerator();
-        if (app.contact().takeAll().size() == 0){
+        if (app.db().readContacts().size() == 0){
             app.contact().create(new ContactData()
-                    .withFirstName("Одеяла")
-                    .withLastName("Иподушки")
-                    .withNickname("Ждут")
-                    .withTitle("Ребят")
-                    .withCompany("Даже сказка")
+                    .withFirstName("JustFirstname")
+                    .withLastName("JustLastname")
+                    .withNickname("JustNickname")
+                    .withTitle("JustTitle")
+                    .withCompany("JustCompany")
+                    .withAddress("")
+                    .withIm("")
+                    .withIm2("")
+                    .withIm3("")
                     .withHomePhone(generator.generateRandomPhone())
                     .withMobilePhone(generator.generateRandomPhone())
                     .withOfficePhone(generator.generateRandomPhone())
-                    .withEmail(generator.generateRandomEmail()));
+                    .withEmail(generator.generateRandomEmail())
+                    .withEmail2(generator.generateRandomEmail())
+                    .withEmail3(generator.generateRandomEmail()));
         }
     }
 
     @Test
     public void testContactDeletion(){
-        Contacts before = app.contact().takeAll();
+        Contacts before = app.db().readContacts();
         ContactData contactToDelete = before.iterator().next();
         app.contact().delete(contactToDelete);
         assertThat(app.contact().count(), equalTo(before.size() - 1));
-        Contacts after = app.contact().takeAll();
+        Contacts after = app.db().readContacts();
         assertThat(after, equalTo(before.without(contactToDelete)));
     }
 

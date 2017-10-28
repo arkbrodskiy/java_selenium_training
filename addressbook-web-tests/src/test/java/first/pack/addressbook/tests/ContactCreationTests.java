@@ -2,6 +2,7 @@ package first.pack.addressbook.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import first.pack.addressbook.generators.ContactDataGenerator;
 import first.pack.addressbook.model.ContactData;
 import first.pack.addressbook.model.Contacts;
 import first.pack.addressbook.model.GroupData;
@@ -38,30 +39,31 @@ public class ContactCreationTests extends TestBase{
 
     @Test(dataProvider = "validContacts")
     public void testContactCreation(ContactData contact) {
-        Contacts before = app.contact().takeAll();
+        Contacts before = app.db().readContacts();
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
-        Contacts after = app.contact().takeAll();
+        Contacts after = app.db().readContacts();
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
     }
 
     @Test
     public void testBadContactCreation() {
-        Contacts before = app.contact().takeAll();
+        ContactDataGenerator generator = new ContactDataGenerator();
+        Contacts before = app.db().readContacts();
         ContactData contact = new ContactData()
-                .withFirstName("XXДаже'")
-                .withLastName("XXСказка'")
-                .withNickname("Спать")
-                .withTitle("Ложится")
-                .withCompany("Чтобы")
-                .withHomePhone("4369852147")
-                .withMobilePhone("1652058741")
-                .withOfficePhone("9696323258")
-                .withEmail("dnri@fhjdgt.so");
+                .withFirstName("Badfirstname'")
+                .withLastName("Badlastname'")
+                .withNickname("Nickname")
+                .withTitle("Title")
+                .withCompany("Company")
+                .withHomePhone(generator.generateRandomPhone())
+                .withMobilePhone(generator.generateRandomPhone())
+                .withOfficePhone(generator.generateRandomPhone())
+                .withEmail(generator.generateRandomEmail());
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().takeAll();
+        Contacts after = app.db().readContacts();
         assertThat(after, equalTo(before));
     }
 

@@ -26,6 +26,7 @@ public class ContactData {
     @Expose
     @Column(name = "company")
     private String company;
+    @Expose
     @Type(type = "text")
     private String address;
     @Expose
@@ -56,6 +57,18 @@ public class ContactData {
     private String officePhone;
     @Transient
     private String allPhones;
+    @Expose
+    @Column(name = "im")
+    @Type(type = "text")
+    private String im;
+    @Expose
+    @Column(name = "im2")
+    @Type(type = "text")
+    private String im2;
+    @Expose
+    @Column(name = "im3")
+    @Type(type = "text")
+    private String im3;
 
 
     public int getId() {
@@ -116,6 +129,18 @@ public class ContactData {
 
     public String getAllEmails() {
         return allEmails;
+    }
+
+    public String getIm() {
+        return im;
+    }
+
+    public String getIm2() {
+        return im2;
+    }
+
+    public String getIm3() {
+        return im3;
     }
 
     public ContactData withId(int id) {
@@ -193,6 +218,21 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withIm(String im) {
+        this.im = im;
+        return this;
+    }
+
+    public ContactData withIm2(String im2) {
+        this.im2 = im2;
+        return this;
+    }
+
+    public ContactData withIm3(String im3) {
+        this.im3 = im3;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -202,7 +242,20 @@ public class ContactData {
 
         if (id != that.id) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (company != null ? !company.equals(that.company) : that.company != null) return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+        if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
+        if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
+        if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
+        if (officePhone != null ? !officePhone.equals(that.officePhone) : that.officePhone != null) return false;
+        if (im != null ? !im.equals(that.im) : that.im != null) return false;
+        if (im2 != null ? !im2.equals(that.im2) : that.im2 != null) return false;
+        return im3 != null ? im3.equals(that.im3) : that.im3 == null;
     }
 
     @Override
@@ -210,15 +263,34 @@ public class ContactData {
         int result = id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (company != null ? company.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+        result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+        result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
+        result = 31 * result + (officePhone != null ? officePhone.hashCode() : 0);
+        result = 31 * result + (im != null ? im.hashCode() : 0);
+        result = 31 * result + (im2 != null ? im2.hashCode() : 0);
+        result = 31 * result + (im3 != null ? im3.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "ContactData{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", officePhone='" + officePhone + '\'' +
                 '}';
     }
 

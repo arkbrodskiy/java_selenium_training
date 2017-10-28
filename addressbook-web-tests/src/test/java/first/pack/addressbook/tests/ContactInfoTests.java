@@ -13,17 +13,17 @@ public class ContactInfoTests extends TestBase{
     @BeforeMethod
     public void ensurePreconditions() {
         ContactDataGenerator generator = new ContactDataGenerator();
-        if (app.contact().takeAll().size() == 0){
+        if (app.db().readContacts().size() == 0){
             app.contact().create(new ContactData()
-                    .withFirstName("Одеяла")
-                    .withLastName("Иподушки")
-                    .withNickname("Ждут")
-                    .withTitle("Ребят")
-                    .withCompany("Даже сказка")
+                    .withFirstName("JustFirstname")
+                    .withLastName("JustLastname")
+                    .withNickname("JustNickname")
+                    .withTitle("JustTitle")
+                    .withCompany("JustCompany")
                     .withHomePhone(generator.generateRandomPhone())
                     .withMobilePhone(generator.generateRandomPhone())
                     .withOfficePhone(generator.generateRandomPhone())
-                    .withAddress("698546 Омск ул. Мира 3-59")
+                    .withAddress("874 Streety St. Towne FR, 48754")
                     .withEmail(generator.generateRandomEmail())
                     .withEmail2(generator.generateRandomEmail())
                     .withEmail3(generator.generateRandomEmail()));

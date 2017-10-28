@@ -55,6 +55,10 @@ public class ContactDataGenerator {
                     .withHomePhone(generateRandomPhone())
                     .withMobilePhone(generateRandomPhone())
                     .withOfficePhone(generateRandomPhone())
+                    .withAddress("")
+                    .withIm("")
+                    .withIm2("")
+                    .withIm3("")
                     .withEmail(generateRandomEmail())
                     .withEmail2(generateRandomEmail())
                     .withEmail3(generateRandomEmail()));
