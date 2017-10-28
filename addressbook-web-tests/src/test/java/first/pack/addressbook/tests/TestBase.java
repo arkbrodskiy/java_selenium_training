@@ -63,8 +63,9 @@ public class TestBase {
         if (Boolean.getBoolean("verifyUI")){
             Contacts dbContacts = app.db().readContacts();
             Contacts uiContacts = app.contact().takeAll();
-            /*assertThat(dbContacts.stream().map((c) -> new ContactData()
-                    .withValue(c.getValue()).withName(c.getName())).collect(Collectors.toSet()), equalTo(uiContacts));*/
+            assertThat(dbContacts.stream().map((c) -> new ContactData()
+                    .withId(c.getId()).withFirstName(c.getFirstName()).withLastName(c.getLastName())).collect(Collectors.toSet()), equalTo(uiContacts.stream().map((c) -> new ContactData()
+                    .withId(c.getId()).withFirstName(c.getFirstName()).withLastName(c.getLastName())).collect(Collectors.toSet())));
 
         }
     }
