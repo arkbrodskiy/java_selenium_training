@@ -69,7 +69,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testAddToGroup(){
         ContactData contactToAdd = app.db().readContacts().iterator().next();
-        GroupData groupToAdd = findGroupToAdd(contactToAdd);
+        GroupData groupToAdd = app.contact().findGroupToAdd(contactToAdd);
         app.contact().addToGroup(contactToAdd, groupToAdd);
         Assert.assertTrue(app.contact().getById(contactToAdd.getId()).getGroups().contains(groupToAdd));
     }
@@ -77,59 +77,11 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testRemoveFromGroup(){
         ContactData contactToRemove = app.db().readContacts().iterator().next();
-        GroupData groupToRemove = findGroupToRemove(contactToRemove);
+        GroupData groupToRemove = app.contact().findGroupToRemove(contactToRemove);
         app.contact().removeFromGroup(contactToRemove, groupToRemove);
         Assert.assertFalse(app.contact().getById(contactToRemove.getId()).getGroups().contains(groupToRemove));
     }
 
-    private GroupData findGroupToAdd(ContactData contact) {
-        Groups groupsWithContact = contact.getGroups();
-        ensureFreeGroupExists(groupsWithContact);
-        return findFreeGroup(groupsWithContact);
-    }
 
-    private GroupData findFreeGroup(Groups groupsWithContact) {
-        Groups groupList = app.db().readGroups();
-        GroupData group = new GroupData();
-        for(GroupData groupInList: groupList){
-            if (!groupsWithContact.contains(groupInList)){
-                group = groupInList;
-                break;
-            }
-        }
-        return group;
-    }
-
-    private void ensureFreeGroupExists(Groups groups) {
-        if (groups.size() == app.db().readGroups().size()){
-            app.goTo().groupPage();
-            app.group().create(new GroupData().withName("Group 01").withHeader("Group 01 header").withFooter("Group 01 footer"));
-            app.goTo().homePage();
-        }
-    }
-
-    private GroupData findGroupToRemove(ContactData contact) {
-        Groups groupsWithContact = contact.getGroups();
-        ensureGroupExists();
-        return findAssociatedGroup(contact, groupsWithContact);
-    }
-
-    private GroupData findAssociatedGroup(ContactData contact, Groups groupsWithContact) {
-        GroupData result;
-        if (groupsWithContact.size() == 0) {
-            result = app.db().readGroups().iterator().next();
-            app.contact().addToGroup(contact, result);
-        }
-        else result = groupsWithContact.iterator().next();
-        return result;
-    }
-
-    private void ensureGroupExists() {
-        if (app.db().readGroups().size() == 0){
-            app.goTo().groupPage();
-            app.group().create(new GroupData().withName("Group 01").withHeader("Group 01 header").withFooter("Group 01 footer"));
-            app.goTo().homePage();
-        }
-    }
 
 }

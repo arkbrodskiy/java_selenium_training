@@ -3,6 +3,7 @@ package first.pack.addressbook.appmanager;
 import first.pack.addressbook.model.ContactData;
 import first.pack.addressbook.model.Contacts;
 import first.pack.addressbook.model.GroupData;
+import first.pack.addressbook.model.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -171,5 +172,55 @@ public class ContactHelper extends HelperBase {
         selectContactById(contact.getId());
         click(By.name("remove"));
         app.goTo().homePage();
+    }
+
+    public GroupData findGroupToAdd(ContactData contact) {
+        Groups groupsWithContact = contact.getGroups();
+        ensureFreeGroupExists(groupsWithContact);
+        return findFreeGroup(groupsWithContact);
+    }
+
+    private GroupData findFreeGroup(Groups groupsWithContact) {
+        Groups groupList = app.db().readGroups();
+        GroupData group = new GroupData();
+        for(GroupData groupInList: groupList){
+            if (!groupsWithContact.contains(groupInList)){
+                group = groupInList;
+                break;
+            }
+        }
+        return group;
+    }
+
+    private void ensureFreeGroupExists(Groups groups) {
+        if (groups.size() == app.db().readGroups().size()){
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("Group 01").withHeader("Group 01 header").withFooter("Group 01 footer"));
+            app.goTo().homePage();
+        }
+    }
+
+    public GroupData findGroupToRemove(ContactData contact) {
+        Groups groupsWithContact = contact.getGroups();
+        ensureGroupExists();
+        return findAssociatedGroup(contact, groupsWithContact);
+    }
+
+    private GroupData findAssociatedGroup(ContactData contact, Groups groupsWithContact) {
+        GroupData result;
+        if (groupsWithContact.size() == 0) {
+            result = app.db().readGroups().iterator().next();
+            app.contact().addToGroup(contact, result);
+        }
+        else result = groupsWithContact.iterator().next();
+        return result;
+    }
+
+    private void ensureGroupExists() {
+        if (app.db().readGroups().size() == 0){
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("Group 01").withHeader("Group 01 header").withFooter("Group 01 footer"));
+            app.goTo().homePage();
+        }
     }
 }
