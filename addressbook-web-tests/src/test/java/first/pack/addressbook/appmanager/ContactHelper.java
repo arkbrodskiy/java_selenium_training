@@ -144,13 +144,13 @@ public class ContactHelper extends HelperBase {
 
     public void addToGroup(ContactData contact, GroupData group) {
         selectContactById(contact.getId());
-        selectGroupToAdd(group);
+        selectGroupByValue(By.name("to_group"), group);
         click(By.name("add"));
         app.goTo().homePage();
     }
 
-    private void selectGroupToAdd(GroupData group) {
-        Select dropdown = new Select(wd.findElement(By.name("to_group")));
+    private void selectGroupByValue(By menuLocator, GroupData group) {
+        Select dropdown = new Select(wd.findElement(menuLocator));
         dropdown.selectByValue(String.valueOf(group.getValue()));
     }
 
@@ -164,5 +164,12 @@ public class ContactHelper extends HelperBase {
             }
         }
         return result;
+    }
+
+    public void removeFromGroup(ContactData contact, GroupData group) {
+        selectGroupByValue(By.cssSelector("select[name='group']"), group);
+        selectContactById(contact.getId());
+        click(By.name("remove"));
+        app.goTo().homePage();
     }
 }
