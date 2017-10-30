@@ -5,7 +5,6 @@ import first.pack.addressbook.model.ContactData;
 import first.pack.addressbook.model.Contacts;
 import first.pack.addressbook.model.GroupData;
 import first.pack.addressbook.model.Groups;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -71,7 +70,7 @@ public class ContactModificationTests extends TestBase {
         ContactData contactToAdd = app.db().readContacts().iterator().next();
         Groups before = contactToAdd.getGroups();
         app.contact().ensureFreeGroupExists(before);
-        GroupData groupToAdd = app.contact().findFreeGroup(before);
+        GroupData groupToAdd = app.contact().findGroupToAdd(before);
         app.contact().addToGroup(contactToAdd, groupToAdd);
         Groups after = app.contact().getById(contactToAdd.getId()).getGroups();
         assertThat(after, equalTo(before.withAdded(groupToAdd)));
@@ -80,9 +79,12 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testRemoveFromGroup(){
         ContactData contactToRemove = app.db().readContacts().iterator().next();
-        GroupData groupToRemove = app.contact().findGroupToRemove(contactToRemove);
+        Groups before = contactToRemove.getGroups();
+        if (before.size() == 0) app.contact().ensureGroupExists();
+        GroupData groupToRemove = app.contact().findGroupToRemove(contactToRemove, before);
         app.contact().removeFromGroup(contactToRemove, groupToRemove);
-        Assert.assertFalse(app.contact().getById(contactToRemove.getId()).getGroups().contains(groupToRemove));
+        Groups after = app.contact().getById(contactToRemove.getId()).getGroups();
+        assertThat(after, equalTo(before.without(groupToRemove)));
     }
 
 

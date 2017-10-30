@@ -174,7 +174,7 @@ public class ContactHelper extends HelperBase {
         app.goTo().homePage();
     }
 
-    public GroupData findFreeGroup(Groups groupsWithContact) {
+    public GroupData findGroupToAdd(Groups groupsWithContact) {
         Groups groupList = app.db().readGroups();
         GroupData group = new GroupData();
         for(GroupData groupInList: groupList){
@@ -194,13 +194,7 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-    public GroupData findGroupToRemove(ContactData contact) {
-        Groups groupsWithContact = contact.getGroups();
-        ensureGroupExists();
-        return findAssociatedGroup(contact, groupsWithContact);
-    }
-
-    private GroupData findAssociatedGroup(ContactData contact, Groups groupsWithContact) {
+    public GroupData findGroupToRemove(ContactData contact, Groups groupsWithContact) {
         GroupData result;
         if (groupsWithContact.size() == 0) {
             result = app.db().readGroups().iterator().next();
@@ -210,7 +204,7 @@ public class ContactHelper extends HelperBase {
         return result;
     }
 
-    private void ensureGroupExists() {
+    public void ensureGroupExists() {
         if (app.db().readGroups().size() == 0){
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("Group 01").withHeader("Group 01 header").withFooter("Group 01 footer"));
