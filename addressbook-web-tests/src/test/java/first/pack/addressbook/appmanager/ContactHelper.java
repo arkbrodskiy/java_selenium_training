@@ -174,13 +174,7 @@ public class ContactHelper extends HelperBase {
         app.goTo().homePage();
     }
 
-    public GroupData findGroupToAdd(ContactData contact) {
-        Groups groupsWithContact = contact.getGroups();
-        ensureFreeGroupExists(groupsWithContact);
-        return findFreeGroup(groupsWithContact);
-    }
-
-    private GroupData findFreeGroup(Groups groupsWithContact) {
+    public GroupData findFreeGroup(Groups groupsWithContact) {
         Groups groupList = app.db().readGroups();
         GroupData group = new GroupData();
         for(GroupData groupInList: groupList){
@@ -192,7 +186,7 @@ public class ContactHelper extends HelperBase {
         return group;
     }
 
-    private void ensureFreeGroupExists(Groups groups) {
+    public void ensureFreeGroupExists(Groups groups) {
         if (groups.size() == app.db().readGroups().size()){
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("Group 01").withHeader("Group 01 header").withFooter("Group 01 footer"));

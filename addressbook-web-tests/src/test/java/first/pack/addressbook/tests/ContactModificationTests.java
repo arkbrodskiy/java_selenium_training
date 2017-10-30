@@ -69,9 +69,12 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testAddToGroup(){
         ContactData contactToAdd = app.db().readContacts().iterator().next();
-        GroupData groupToAdd = app.contact().findGroupToAdd(contactToAdd);
+        Groups before = contactToAdd.getGroups();
+        app.contact().ensureFreeGroupExists(before);
+        GroupData groupToAdd = app.contact().findFreeGroup(before);
         app.contact().addToGroup(contactToAdd, groupToAdd);
-        Assert.assertTrue(app.contact().getById(contactToAdd.getId()).getGroups().contains(groupToAdd));
+        Groups after = app.contact().getById(contactToAdd.getId()).getGroups();
+        assertThat(after, equalTo(before.withAdded(groupToAdd)));
     }
 
     @Test
