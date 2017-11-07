@@ -160,4 +160,9 @@ public class JamesHelper {
             return null;
         }
     }
+
+    public void enableTelnet() {
+        initTelnetSession();
+        closeTelnetSession();
+    }
 }
