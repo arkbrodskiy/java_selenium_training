@@ -1,4 +1,4 @@
-package first.pack.rest;
+package first.pack.rest.tests;
 
 public class Issue {
 

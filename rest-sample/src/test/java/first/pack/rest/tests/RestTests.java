@@ -1,4 +1,4 @@
-package first.pack.rest;
+package first.pack.rest.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
