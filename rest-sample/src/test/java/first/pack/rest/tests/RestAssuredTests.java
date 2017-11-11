@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import io.restassured.RestAssured;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -46,6 +47,19 @@ public class RestAssuredTests {
         return element.getAsJsonObject().get("issue_id").getAsInt();
 
     }
+
+    private void skipIfNotFixed(int issueId){
+        if (isIssueOpen(issueId)) throw new SkipException("Ignored because of issue " + issueId);
+    }
+
+    private boolean isIssueOpen(int issueId) {
+        String jsonString = RestAssured.get(String.format("http://demo.bugify.com/api/issues/%d.json", issueId)).asString();
+        JsonElement element = new JsonParser().parse(jsonString);
+        JsonElement issues = element.getAsJsonObject().get("issues");
+        return !issues.getAsJsonArray().get(0).getAsJsonObject().get("state_name").toString().contains("Fixed");
+    }
+
+
 
 
 }
