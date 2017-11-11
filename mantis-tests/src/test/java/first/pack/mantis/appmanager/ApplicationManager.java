@@ -1,5 +1,6 @@
 package first.pack.mantis.appmanager;
 
+import first.pack.mantis.model.Project;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -26,6 +27,7 @@ public class ApplicationManager {
     private PasswordResetHelper passwordResetHelper;
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
+    private SoapHelper soapHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -39,6 +41,7 @@ public class ApplicationManager {
         passwordResetHelper = new PasswordResetHelper(this);
         sessionHelper = new SessionHelper(this);
         navigationHelper = new NavigationHelper(this);
+        soapHelper = new SoapHelper(this);
     }
 
     public void stop() {
@@ -106,6 +109,11 @@ public class ApplicationManager {
 
     public NavigationHelper goTo(){
         return navigationHelper;
+    }
+
+    public SoapHelper soap(){
+        if (soapHelper == null) soapHelper = new SoapHelper(this);
+        return soapHelper;
     }
 
 }
