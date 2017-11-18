@@ -15,9 +15,9 @@ public class Executable {
     }
 
     public static void distanceOutput(Point p1, Point p2){
-        System.out.println("Вычисление расстояния между точками по заданным координатам.");
-        System.out.println("Координаты первой точки: (" + p1.x + ":" + p1.y + ")");
-        System.out.println("Координаты второй точки: (" + p2.x + ":" + p2.y + ")");
-        System.out.println("Расстояние между точками: " + Math.round(p1.distance(p2)*100)/100.0);
+        System.out.println("Distance calculation based on the 2 points coordinates");
+        System.out.println("First point coordinates: (" + p1.x + ":" + p1.y + ")");
+        System.out.println("Second point coordinates: (" + p2.x + ":" + p2.y + ")");
+        System.out.println("Distance between 2 points is: " + Math.round(p1.distance(p2)*100)/100.0);
     }
 }
